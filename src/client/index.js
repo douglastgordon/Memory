@@ -4,30 +4,31 @@
 // You probably won't need to touch this file.
 
 import React from 'react'
-import { render } from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
+import ReactDOM from 'react-dom'
 import App from './../components/App'
 
-//  testing
-import store from '../store/store'
+import configureStore from '../store/store'
 
-window.store = store()
+//  testing
+import { receiveCards } from '../actions/card_actions'
+
+window.receiveCards = receiveCards()
+
+window.store = configureStore()
 
 // end of testing
 
-const root = document.querySelector('#root')
+document.addEventListener('DOMContentLoaded', () => {
+  const store = configureStore()
+  const root = document.getElementById('root')
+  ReactDOM.render(<App store={store} />, root)
+})
 
-const mount = RootComponent => render(
-  <AppContainer>
-    <RootComponent />
-  </AppContainer>,
-  root
-)
 
-if (module.hot) {
-  module.hot.accept('./../components/App', () => {
-    System.import('./../components/App').then(RootComponent => mount(RootComponent.default))
-  })
-}
-
-mount(App)
+// if (module.hot) {
+//   module.hot.accept('./../components/App', () => {
+//     System.import('./../components/App').then(RootComponent => mount(RootComponent.default))
+//   })
+// }
+//
+// mount(App)

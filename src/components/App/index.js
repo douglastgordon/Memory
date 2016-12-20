@@ -1,10 +1,12 @@
 import React from 'react'
-import Game from '../Game/Game'
+import { Provider } from 'react-redux';
 
-const App = () => (
-  <div>
+import Game from '../Game/game_container'
+
+const App = ({ store }) => (
+  <Provider store={store}>
     <Game />
-  </div>
+  </Provider>
 )
 
 export default App
