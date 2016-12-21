@@ -1,21 +1,30 @@
 import React from 'react'
+import styles from './Game.scss'
+
 
 export default class Card extends React.Component {
 
   constructor(props) {
     super(props)
+    this.handleClick = this.handleClick.bind(this)
     this.state = {
       flipped: false,
     }
   }
 
   handleClick() {
-    
+    this.setState({ flipped: !this.state.flipped })
   }
 
   render() {
+    let icon
+    if (this.state.flipped){
+      icon = this.props.img
+    }
     return (
-      <div onClick={this.handleClick} className="card" id={this.props.key}>{this.props.img}</div>
+      <div onClick={this.handleClick} className={styles.card} id={this.props.key}>
+        <p>{icon}</p>
+      </div>
     )
   }
 }
@@ -23,5 +32,4 @@ export default class Card extends React.Component {
 Card.propTypes = {
   key: React.PropTypes.number.isRequired,
   img: React.PropTypes.string.isRequired,
-
 }

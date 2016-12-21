@@ -29,11 +29,11 @@ export default class Game extends React.Component {
 
   makeCards() {
     let currentCards = this.getCurrentCards()
-    let key = 0
-    currentCards = currentCards.map((cardImg) => {
-      key += 1
+    let i = 0
+    currentCards = currentCards.map((icon) => {
+      i += 1
       return (
-        <Card key={key} img={cardImg} />
+        <Card key={i} img={icon} />
       )
     })
     return currentCards
@@ -49,7 +49,7 @@ export default class Game extends React.Component {
       <div>
         <h1 className={styles.header}>Memory Game</h1>
         <Timer />
-        <div className={styles.placeholder}>Let the gdfames begin (here).
+        <div className={styles.gamearea}>
           {cards}
         </div>
       </div>
