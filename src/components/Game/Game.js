@@ -1,24 +1,15 @@
 import React from 'react'
 import Timer from '../Timer/Timer'
+import Card from './card'
 import styles from './Game.scss'
 
-
-// const Game = () => (
-//   <div>
-//     <h1 className={styles.header}>NYT Games Code Test</h1>
-//     <Timer />
-//     <div className={styles.placeholder}>Let the games begin (here).</div>
-//   </div>
-// )
-//
-// export default Game
 
 export default class Game extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      playing: Object.keys(this.props.cards),
+      difficulty: 'easy',
     }
   }
 
@@ -26,15 +17,47 @@ export default class Game extends React.Component {
     this.props.requestCards()
   }
 
+  getCurrentCards() {
+    let currentCards
+    this.props.cards.levels.forEach((level) => {
+      if (level.difficulty === this.state.difficulty) {
+        currentCards = level.cards
+      }
+    })
+    return currentCards
+  }
+
+  makeCards() {
+    let currentCards = this.getCurrentCards()
+    let key = 0
+    currentCards = currentCards.map((cardImg) => {
+      key += 1
+      return (
+        <Card key={key} img={cardImg} />
+      )
+    })
+    return currentCards
+  }
+
   render() {
-    debugger
+    let cards
+    if (this.props.cards.levels) {
+      cards = this.makeCards()
+    }
+
     return (
       <div>
-        <h1 className={styles.header}>NYT Games Code Test</h1>
-        <p>props here: `${Object.keys(this.props.cards)}`</p>
+        <h1 className={styles.header}>Memory Game</h1>
         <Timer />
-        <div className={styles.placeholder}>Let the gdfames begin (here).</div>
+        <div className={styles.placeholder}>Let the gdfames begin (here).
+          {cards}
+        </div>
       </div>
     )
   }
+}
+
+Game.propTypes = {
+  cards: React.PropTypes.object.isRequired,
+  requestCards: React.PropTypes.func.isRequired,
 }

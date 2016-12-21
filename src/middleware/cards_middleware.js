@@ -6,7 +6,6 @@ import {
 } from '../actions/card_actions'
 
 const cardsMiddleware = ({ getState, dispatch }) => next => (action) => {
-  debugger
   switch (action.type) {
     case REQUEST_CARDS:
       const success = data => dispatch(receiveCards(data))
