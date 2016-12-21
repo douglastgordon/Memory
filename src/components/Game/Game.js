@@ -10,6 +10,8 @@ export default class Game extends React.Component {
     super(props)
     this.state = {
       difficulty: 'easy',
+      running: false,
+      matches: 0,
     }
   }
 

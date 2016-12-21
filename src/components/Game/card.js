@@ -13,7 +13,9 @@ export default class Card extends React.Component {
   }
 
   handleClick() {
-    this.setState({ flipped: !this.state.flipped })
+    if (!this.state.flipped) {
+      this.setState({ flipped: true })
+    }
   }
 
   render() {
