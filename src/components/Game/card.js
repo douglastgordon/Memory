@@ -6,13 +6,13 @@ export default class Card extends React.Component {
 
   constructor(props) {
     super(props)
-    this.handleClick = this.handleClick.bind(this)
+    this.flip = this.flip.bind(this)
     this.state = {
       flipped: false,
     }
   }
 
-  handleClick() {
+  flip() {
     if (!this.state.flipped) {
       this.setState({ flipped: true })
     }
@@ -20,11 +20,11 @@ export default class Card extends React.Component {
 
   render() {
     let icon
-    if (this.state.flipped){
-      icon = this.props.img
+    if (this.state.flipped) {
+      icon = this.props.icon
     }
     return (
-      <div onClick={this.handleClick} className={styles.card} id={this.props.key}>
+      <div className={styles.card} onClick={this.flip}>
         <p>{icon}</p>
       </div>
     )
@@ -33,5 +33,5 @@ export default class Card extends React.Component {
 
 Card.propTypes = {
   key: React.PropTypes.number.isRequired,
-  img: React.PropTypes.string.isRequired,
+  icon: React.PropTypes.string.isRequired,
 }

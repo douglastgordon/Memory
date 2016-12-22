@@ -10,7 +10,9 @@ export default class Game extends React.Component {
     super(props)
     this.state = {
       difficulty: 'easy',
+      cards: {},
       running: false,
+      lastMove: null,
       matches: 0,
     }
   }
@@ -19,26 +21,36 @@ export default class Game extends React.Component {
     this.props.requestCards()
   }
 
-  getCurrentCards() {
-    let currentCards
-    this.props.cards.levels.forEach((level) => {
+  componentWillReceiveProps(nextProps) {
+    this.getCards(nextProps.cards)
+  }
+
+  getCards(data) {
+    const cards = []
+    let icons = []
+    data.levels.forEach((level) => {
       if (level.difficulty === this.state.difficulty) {
-        currentCards = level.cards
+        icons = level.cards
       }
     })
-    return currentCards
+    icons.forEach((icon) => {
+      const card = { icon, flipped: false, matched: false }
+      cards.push(card)
+    })
+    this.setState({ cards })
   }
 
   makeCards() {
-    let currentCards = this.getCurrentCards()
-    let i = 0
-    currentCards = currentCards.map((icon) => {
-      i += 1
-      return (
-        <Card key={i} img={icon} />
-      )
-    })
-    return currentCards
+    if (this.state.cards.length > 0) {
+      return this.state.cards.map((card, key) =>
+        <Card
+          key={key}
+          icon={card.icon}
+          flipped={card.flipped}
+          matched={card.matched}
+        />
+    ) }
+    return []
   }
 
   render() {
@@ -46,7 +58,7 @@ export default class Game extends React.Component {
     if (this.props.cards.levels) {
       cards = this.makeCards()
     }
-
+    // const cards = this.makeCards()
     return (
       <div>
         <h1 className={styles.header}>Memory Game</h1>
