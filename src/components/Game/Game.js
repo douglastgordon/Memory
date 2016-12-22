@@ -8,11 +8,12 @@ export default class Game extends React.Component {
 
   constructor(props) {
     super(props)
+    this.processMove = this.processMove.bind(this)
     this.state = {
       difficulty: 'easy',
-      cards: {},
+      cards: [],
       running: false,
-      lastMove: null,
+      lastMoveId: null,
       matches: 0,
     }
   }
@@ -22,10 +23,10 @@ export default class Game extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getCards(nextProps.cards)
+    this.setInitialCardsState(nextProps.cards)
   }
 
-  getCards(data) {
+  setInitialCardsState(data) {
     const cards = []
     let icons = []
     data.levels.forEach((level) => {
@@ -40,14 +41,44 @@ export default class Game extends React.Component {
     this.setState({ cards })
   }
 
+  processMove(id) {
+    const newCardsState = this.state.cards
+    newCardsState[id].flipped = true
+    if (this.state.lastMoveId === null) {
+      this.setState({ cards: newCardsState, lastMoveId: id })
+    } else {
+      this.setState({ cards: newCardsState }, this.checkMatch(id))
+    }
+  }
+
+  checkMatch(id) {
+    // debugger
+    const newCardsState = this.state.cards
+    if (this.state.cards[id].icon === this.state.cards[this.state.lastMoveId].icon) {
+      newCardsState[id].matched = true
+      newCardsState[id].flipped = true
+      newCardsState[this.state.lastMoveId].matched = true
+      this.setState({ cards: newCardsState, lastMoveId: null })
+    } else {
+
+      // this.setState({ lastMoveId: null })
+      setTimeout(() => {
+        newCardsState[id].flipped = false
+        newCardsState[this.state.lastMoveId].flipped = false
+        this.setState({ cards: newCardsState, lastMoveId: null })
+      }, 1000)
+    }
+  }
+
   makeCards() {
     if (this.state.cards.length > 0) {
-      return this.state.cards.map((card, key) =>
+      return this.state.cards.map((card, id) =>
         <Card
-          key={key}
+          id={id}
           icon={card.icon}
           flipped={card.flipped}
           matched={card.matched}
+          processMove={this.processMove}
         />
     ) }
     return []
@@ -58,6 +89,7 @@ export default class Game extends React.Component {
     if (this.props.cards.levels) {
       cards = this.makeCards()
     }
+    console.log(this.state.cards)
     // const cards = this.makeCards()
     return (
       <div>

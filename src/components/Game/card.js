@@ -7,24 +7,19 @@ export default class Card extends React.Component {
   constructor(props) {
     super(props)
     this.flip = this.flip.bind(this)
-    this.state = {
-      flipped: false,
-    }
   }
 
-  flip() {
-    if (!this.state.flipped) {
-      this.setState({ flipped: true })
-    }
+  flip(e) {
+    this.props.processMove(e.target.id)
   }
 
   render() {
     let icon
-    if (this.state.flipped) {
+    if (this.props.flipped) {
       icon = this.props.icon
     }
     return (
-      <div className={styles.card} onClick={this.flip}>
+      <div className={styles.card} id={this.props.id} onClick={this.flip}>
         <p>{icon}</p>
       </div>
     )
@@ -32,6 +27,8 @@ export default class Card extends React.Component {
 }
 
 Card.propTypes = {
-  key: React.PropTypes.number.isRequired,
+  id: React.PropTypes.number.isRequired,
   icon: React.PropTypes.string.isRequired,
+  processMove: React.PropTypes.func.isRequired,
+  flipped: React.PropTypes.bool.isRequired,
 }
