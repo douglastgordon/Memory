@@ -3,18 +3,17 @@ import Timer from '../Timer/Timer'
 import Card from './card'
 import styles from './Game.scss'
 
-
 export default class Game extends React.Component {
 
   constructor(props) {
     super(props)
     this.processMove = this.processMove.bind(this)
+    this.changeDifficulty = this.changeDifficulty.bind(this)
     this.state = {
       difficulty: 'easy',
       cards: [],
       running: false,
       lastMoveId: null,
-      matches: 0,
     }
   }
 
@@ -23,10 +22,10 @@ export default class Game extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setInitialCardsState(nextProps.cards)
+    this.setCards(nextProps.cards)
   }
 
-  setInitialCardsState(data) {
+  setCards(data) {
     const cards = []
     let icons = []
     data.levels.forEach((level) => {
@@ -49,25 +48,35 @@ export default class Game extends React.Component {
     } else {
       this.setState({ cards: newCardsState }, this.checkMatch(id))
     }
+    if (this.gameWon()) {
+      //do something
+    }
   }
 
   checkMatch(id) {
-    // debugger
     const newCardsState = this.state.cards
     if (this.state.cards[id].icon === this.state.cards[this.state.lastMoveId].icon) {
       newCardsState[id].matched = true
       newCardsState[id].flipped = true
       newCardsState[this.state.lastMoveId].matched = true
-      this.setState({ cards: newCardsState, lastMoveId: null })
+      this.setState({
+        cards: newCardsState, lastMoveId: null })
     } else {
-
-      // this.setState({ lastMoveId: null })
       setTimeout(() => {
         newCardsState[id].flipped = false
         newCardsState[this.state.lastMoveId].flipped = false
         this.setState({ cards: newCardsState, lastMoveId: null })
       }, 1000)
     }
+  }
+
+  gameWon() {
+    this.state.cards.forEach((card) => {
+      if (!card.matched) {
+        return false
+      }
+    })
+    return true
   }
 
   makeCards() {
@@ -84,16 +93,20 @@ export default class Game extends React.Component {
     return []
   }
 
+  changeDifficulty() {
+    const difficulty = (this.state.difficulty === 'easy') ? 'hard' : 'easy'
+    this.setState({ difficulty }, () => {
+      this.setCards(this.props.cards)
+    })
+  }
+
   render() {
-    let cards
-    if (this.props.cards.levels) {
-      cards = this.makeCards()
-    }
-    console.log(this.state.cards)
-    // const cards = this.makeCards()
+    const cards = this.makeCards()
+
     return (
       <div>
         <h1 className={styles.header}>Memory Game</h1>
+        <div onClick={this.changeDifficulty}>change</div>
         <Timer />
         <div className={styles.gamearea}>
           {cards}
