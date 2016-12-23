@@ -20,6 +20,7 @@ const Timer = ({ time = 0 }) => (
 )
 
 Timer.propTypes = {
+  updateTimer: React.PropTypes.func.isRequired,
   time: React.PropTypes.number,
 }
 
@@ -44,6 +45,7 @@ class TimerContainer extends React.Component {
     this.setState({
       secondsElapsed: this.state.secondsElapsed + 1,
     })
+    this.props.updateTimer()
   }
 
   render() {

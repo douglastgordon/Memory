@@ -10,12 +10,14 @@ export default class Game extends React.Component {
     this.processMove = this.processMove.bind(this)
     this.changeDifficulty = this.changeDifficulty.bind(this)
     this.startGame = this.startGame.bind(this)
+    this.updateTimer = this.updateTimer.bind(this)
     this.state = {
       difficulty: 'easy',
       cards: [],
       running: false,
       lastMoveId: null,
       locked: true,
+      elapsedTime: 0,
     }
   }
 
@@ -56,12 +58,12 @@ export default class Game extends React.Component {
       this.checkMatch(id)
     }
     if (this.gameWon()) {
-      // do something
+      console.log(this.state.elapsedTime)
+      this.setState({ running: false, locked: true })
     }
   }
 
   checkMatch(id) {
-    // debugger
     const newCardsState = this.state.cards
     if (this.state.cards[id].icon === this.state.cards[this.state.lastMoveId].icon) {
       newCardsState[id].matched = true
@@ -84,12 +86,13 @@ export default class Game extends React.Component {
   }
 
   gameWon() {
+    let isWon = true
     this.state.cards.forEach((card) => {
       if (!card.matched) {
-        return false
+        isWon = false
       }
     })
-    return true
+    return isWon
   }
 
   makeCards() {
@@ -117,13 +120,17 @@ export default class Game extends React.Component {
     this.setState({ running: true, locked: false })
   }
 
+  updateTimer() {
+    this.setState({ elapsedTime: this.state.elapsedTime + 1 })
+  }
+
   render() {
     const cards = this.makeCards()
     let timer
     let startButton
 
     if (this.state.running) {
-      timer = <Timer />
+      timer = <Timer updateTimer={this.updateTimer} />
     } else {
       startButton = <div onClick={this.startGame}>start</div>
     }
