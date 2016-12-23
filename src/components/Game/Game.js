@@ -15,6 +15,7 @@ export default class Game extends React.Component {
       cards: [],
       running: false,
       lastMoveId: null,
+      locked: true,
     }
   }
 
@@ -43,31 +44,42 @@ export default class Game extends React.Component {
 
   processMove(id) {
     const newCardsState = this.state.cards
-    newCardsState[id].flipped = true
+    if (this.state.locked) {
+      return
+    } else {
+      newCardsState[id].flipped = true
+    }
     if (this.state.lastMoveId === null) {
       this.setState({ cards: newCardsState, lastMoveId: id })
     } else {
-      this.setState({ cards: newCardsState }, this.checkMatch(id))
+      this.setState({ cards: newCardsState, locked: true })
+      this.checkMatch(id)
     }
     if (this.gameWon()) {
-      //do something
+      // do something
     }
   }
 
   checkMatch(id) {
+    // debugger
     const newCardsState = this.state.cards
     if (this.state.cards[id].icon === this.state.cards[this.state.lastMoveId].icon) {
       newCardsState[id].matched = true
       newCardsState[id].flipped = true
       newCardsState[this.state.lastMoveId].matched = true
       this.setState({
-        cards: newCardsState, lastMoveId: null })
+        cards: newCardsState,
+        lastMoveId: null,
+        locked: false })
     } else {
       setTimeout(() => {
         newCardsState[id].flipped = false
         newCardsState[this.state.lastMoveId].flipped = false
-        this.setState({ cards: newCardsState, lastMoveId: null })
-      }, 1000)
+        this.setState({
+          cards: newCardsState,
+          lastMoveId: null,
+          locked: false })
+      }, 500)
     }
   }
 
@@ -102,18 +114,25 @@ export default class Game extends React.Component {
   }
 
   startGame() {
-    this.setState({ running: true })
+    this.setState({ running: true, locked: false })
   }
 
   render() {
     const cards = this.makeCards()
-    const timer = this.state.running ? <Timer /> : ''
+    let timer
+    let startButton
+
+    if (this.state.running) {
+      timer = <Timer />
+    } else {
+      startButton = <div onClick={this.startGame}>start</div>
+    }
 
     return (
       <div>
         <h1 className={styles.header}>Memory Game</h1>
         <div onClick={this.changeDifficulty}>change</div>
-        <div onClick={this.startGame}>start</div>
+        {startButton}
         {timer}
         <div className={styles.gamearea}>
           {cards}
