@@ -12,7 +12,8 @@ app.get('/', (req, res) => {
     <html>
       <head>
         <meta charset="utf-8" />
-        <title>Games Web Code Test</title>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <title>Memory</title>
       </head>
       <body>
         <div id='root'></div>

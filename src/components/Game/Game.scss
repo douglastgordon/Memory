@@ -3,7 +3,19 @@
   font-family: sans-serif;
 }
 
+.content {
+  border: 1px solid red;
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
 .gamearea {
+  position: absolute;
+  top: 100px;
   margin: 0 auto;
   display: flex;
   width: 320px;

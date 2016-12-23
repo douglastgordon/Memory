@@ -2,6 +2,7 @@ import React from 'react'
 import Timer from '../Timer/Timer'
 import Card from '../Card/card'
 import Winner from '../Winner/winner'
+import Start from '../Start/start'
 import styles from './Game.scss'
 
 export default class Game extends React.Component {
@@ -10,7 +11,7 @@ export default class Game extends React.Component {
     super(props)
     this.processMove = this.processMove.bind(this)
     this.changeDifficulty = this.changeDifficulty.bind(this)
-    this.startGame = this.startGame.bind(this)
+    this.startTimedGame = this.startTimedGame.bind(this)
     this.updateTimer = this.updateTimer.bind(this)
     this.state = {
       difficulty: 'easy',
@@ -110,14 +111,13 @@ export default class Game extends React.Component {
     return []
   }
 
-  changeDifficulty() {
-    const difficulty = (this.state.difficulty === 'easy') ? 'hard' : 'easy'
+  changeDifficulty(difficulty) {
     this.setState({ difficulty }, () => {
       this.setCards(this.props.cards)
     })
   }
 
-  startGame() {
+  startTimedGame() {
     this.setState({ running: true, locked: false })
   }
 
@@ -128,13 +128,17 @@ export default class Game extends React.Component {
   render() {
     const cards = this.makeCards()
     let timer
-    let startButton
+    let start
     let winner
 
     if (this.state.running) {
       timer = <Timer updateTimer={this.updateTimer} />
     } else {
-      startButton = <div onClick={this.startGame}>start</div>
+      start =
+      <Start
+        startTimedGame={this.startTimedGame}
+        changeDifficulty={this.changeDifficulty}
+      />
     }
 
     if (this.state.won) {
@@ -144,13 +148,16 @@ export default class Game extends React.Component {
     return (
       <div>
         <h1 className={styles.header}>Memory Game</h1>
-        <div onClick={this.changeDifficulty}>change</div>
-        {startButton}
         {timer}
-        {winner}
-        <div className={styles.gamearea}>
-          {cards}
+
+        <div className={styles.content}>
+          {start}
+          {winner}
+          <div className={styles.gamearea}>
+            {cards}
+          </div>
         </div>
+
       </div>
     )
   }

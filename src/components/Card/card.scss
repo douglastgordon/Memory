@@ -1,9 +1,10 @@
 // dimensions of real playing card
-$card-width: 67.5px;
-$card-height: 105px;
+// $card-width: 67.5px;
+// $card-height: 105px;
+$card-width: 70px;
+$card-height: 70px;
 
 .card {
-  // border: 1px solid black;
   border-radius: 5px;
   width: $card-width;
   height: $card-height;
