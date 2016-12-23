@@ -1,6 +1,7 @@
 import React from 'react'
 import Timer from '../Timer/Timer'
-import Card from './card'
+import Card from '../Card/card'
+import Winner from '../Winner/winner'
 import styles from './Game.scss'
 
 export default class Game extends React.Component {
@@ -18,6 +19,7 @@ export default class Game extends React.Component {
       lastMoveId: null,
       locked: true,
       elapsedTime: 0,
+      won: false,
     }
   }
 
@@ -58,8 +60,7 @@ export default class Game extends React.Component {
       this.checkMatch(id)
     }
     if (this.gameWon()) {
-      console.log(this.state.elapsedTime)
-      this.setState({ running: false, locked: true })
+      this.setState({ running: false, locked: true, won: true })
     }
   }
 
@@ -128,11 +129,16 @@ export default class Game extends React.Component {
     const cards = this.makeCards()
     let timer
     let startButton
+    let winner
 
     if (this.state.running) {
       timer = <Timer updateTimer={this.updateTimer} />
     } else {
       startButton = <div onClick={this.startGame}>start</div>
+    }
+
+    if (this.state.won) {
+      winner = <Winner elapsedTime={this.state.elapsedTime} />
     }
 
     return (
@@ -141,6 +147,7 @@ export default class Game extends React.Component {
         <div onClick={this.changeDifficulty}>change</div>
         {startButton}
         {timer}
+        {winner}
         <div className={styles.gamearea}>
           {cards}
         </div>

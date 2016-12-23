@@ -1,6 +1,5 @@
 import React from 'react'
-import styles from './Game.scss'
-
+import styles from './card.scss'
 
 export default class Card extends React.Component {
 

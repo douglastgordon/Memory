@@ -1,0 +1,23 @@
+// dimensions of real playing card
+$card-width: 67.5px;
+$card-height: 105px;
+
+.card {
+  // border: 1px solid black;
+  border-radius: 5px;
+  width: $card-width;
+  height: $card-height;
+  margin-bottom: 10px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  &:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.13), 0 10px 10px rgba(0,0,0,0.11);
+    cursor: pointer;
+   }
+  p {
+    line-height: $card-height;
+    font-size: 40px;
+    margin: 0;
+  }
+}
