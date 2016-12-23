@@ -14,10 +14,7 @@ export default class Card extends React.Component {
   }
 
   render() {
-    let icon
-    if (this.props.flipped) {
-      icon = this.props.icon
-    }
+    const icon = this.props.flipped ? this.props.icon : ''
     return (
       <div className={styles.card} id={this.props.id} onClick={this.flip}>
         <p>{icon}</p>

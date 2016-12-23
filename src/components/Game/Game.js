@@ -9,6 +9,7 @@ export default class Game extends React.Component {
     super(props)
     this.processMove = this.processMove.bind(this)
     this.changeDifficulty = this.changeDifficulty.bind(this)
+    this.startGame = this.startGame.bind(this)
     this.state = {
       difficulty: 'easy',
       cards: [],
@@ -100,14 +101,20 @@ export default class Game extends React.Component {
     })
   }
 
+  startGame() {
+    this.setState({ running: true })
+  }
+
   render() {
     const cards = this.makeCards()
+    const timer = this.state.running ? <Timer /> : ''
 
     return (
       <div>
         <h1 className={styles.header}>Memory Game</h1>
         <div onClick={this.changeDifficulty}>change</div>
-        <Timer />
+        <div onClick={this.startGame}>start</div>
+        {timer}
         <div className={styles.gamearea}>
           {cards}
         </div>
