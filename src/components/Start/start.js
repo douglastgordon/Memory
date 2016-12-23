@@ -5,23 +5,44 @@ export default class Start extends React.Component {
 
   constructor(props) {
     super(props)
+    this.selectDifficulty = this.selectDifficulty.bind(this)
+    this.state = {
+      difficulty: 'easy',
+    }
   }
 
-
-
+  selectDifficulty(difficulty) {
+    if (this.state.difficulty === difficulty) {
+      return
+    }
+    this.setState({ difficulty })
+    this.props.changeDifficulty(difficulty)
+  }
 
   render() {
+    let easySelected = ''
+    let hardSelected = ''
+    if (this.state.difficulty === 'easy') {
+      easySelected = styles.selected
+    } else {
+      hardSelected = styles.selected
+    }
+
     return (
       <div className={styles.container}>
-      <div className={styles.difficulty}>
-        <div className={styles.easy} onClick={() => this.props.changeDifficulty('easy')}>
-          Easy
+        <div className={styles.butttonContainer}>
+          <div className={styles.easy + ' ' + easySelected} onClick={() => this.selectDifficulty('easy')}>
+            Easy
+          </div>
+          <div className={styles.hard + ' ' + hardSelected} onClick={() => this.selectDifficulty('hard')}>
+            Hard
+          </div>
         </div>
-        <div className={styles.hard} onClick={() => this.props.changeDifficulty('hard')}>
-          Hard
+        <div className={styles.butttonContainer}>
+          <div className={styles.timedGame} onClick={this.props.startTimedGame}>
+            Timed Game
+          </div>
         </div>
-      </div>
-        <div onClick={this.props.startTimedGame}>Timed Game</div>
       </div>
     )
   }
@@ -30,4 +51,5 @@ export default class Start extends React.Component {
 Start.propTypes = {
   startTimedGame: React.PropTypes.func,
   changeDifficulty: React.PropTypes.func,
+
 }
