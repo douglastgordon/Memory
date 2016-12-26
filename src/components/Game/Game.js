@@ -75,17 +75,10 @@ export default class Game extends React.Component {
     const newCardsState = this.state.cards
     let newLastMoveIdsState = this.state.lastMoveIds
     newLastMoveIdsState.push(id)
-
-    let match = true
-    newLastMoveIdsState.forEach((moveId) => {
-      if (this.state.cards[moveId].icon !== this.state.cards[id].icon) {
-        match = false
-      }
-    })
+    const match = this.lastCardMatches(id)
 
     if (match) {
       newCardsState[id].flipped = true
-
       if ((this.state.difficulty === 'easy' && newLastMoveIdsState.length === 2) ||
           (this.state.difficulty === 'hard' && newLastMoveIdsState.length === 2) ||
           (this.state.difficulty === 'triples' && newLastMoveIdsState.length === 3)) {
@@ -96,36 +89,30 @@ export default class Game extends React.Component {
       }
       this.setState({ cards: newCardsState, lastMoveIds: newLastMoveIdsState, locked: false })
     } else {
-      setTimeout(() => {
-        newLastMoveIdsState.forEach((lastMoveId) => {
-          newCardsState[lastMoveId].flipped = false
-        })
-        this.setState({
-          cards: newCardsState,
-          lastMoveIds: [],
-          locked: false })
-      }, 500)
+      this.turnOverUnmatchedTiles(newLastMoveIdsState, newCardsState)
     }
+  }
 
+  turnOverUnmatchedTiles(newLastMoveIdsState, newCardsState) {
+    setTimeout(() => {
+      newLastMoveIdsState.forEach((lastMoveId) => {
+        newCardsState[lastMoveId].flipped = false
+      })
+      this.setState({
+        cards: newCardsState,
+        lastMoveIds: [],
+        locked: false })
+    }, 500)
+  }
 
-    // if (this.state.cards[id].icon === this.state.cards[this.state.lastMoveId].icon) {
-    //   newCardsState[id].matched = true
-    //   newCardsState[id].flipped = true
-    //   newCardsState[this.state.lastMoveId].matched = true
-    //   this.setState({
-    //     cards: newCardsState,
-    //     lastMoveId: null,
-    //     locked: false })
-    // } else {
-    //   setTimeout(() => {
-    //     newCardsState[id].flipped = false
-    //     newCardsState[this.state.lastMoveId].flipped = false
-    //     this.setState({
-    //       cards: newCardsState,
-    //       lastMoveId: null,
-    //       locked: false })
-    //   }, 500)
-    // }
+  lastCardMatches(id) {
+    let match = true
+    this.state.lastMoveIds.forEach((moveId) => {
+      if (this.state.cards[moveId].icon !== this.state.cards[id].icon) {
+        match = false
+      }
+    })
+    return match
   }
 
   gameWon() {
