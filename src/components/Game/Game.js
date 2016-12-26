@@ -17,7 +17,8 @@ export default class Game extends React.Component {
       difficulty: 'easy',
       cards: [],
       running: false,
-      lastMoveId: null,
+      // lastMoveId: null,
+      lastMoveIds: [],
       locked: true,
       elapsedTime: 0,
       won: false,
@@ -34,7 +35,6 @@ export default class Game extends React.Component {
   }
 
   setCards(data) {
-    debugger
     const cards = []
     let icons = []
     data.forEach((level) => {
@@ -56,8 +56,12 @@ export default class Game extends React.Component {
     } else {
       newCardsState[id].flipped = true
     }
-    if (this.state.lastMoveId === null) {
-      this.setState({ cards: newCardsState, lastMoveId: id })
+    const lastMoveIds = this.state.lastMoveIds
+    if (lastMoveIds.length === 0) {
+      this.setState({ cards: newCardsState, lastMoveIds: [id], locked: true },
+      () => {
+        this.setState({ locked: false })
+      })
     } else {
       this.setState({ cards: newCardsState, locked: true })
       this.checkMatch(id)
@@ -69,24 +73,59 @@ export default class Game extends React.Component {
 
   checkMatch(id) {
     const newCardsState = this.state.cards
-    if (this.state.cards[id].icon === this.state.cards[this.state.lastMoveId].icon) {
-      newCardsState[id].matched = true
+    let newLastMoveIdsState = this.state.lastMoveIds
+    newLastMoveIdsState.push(id)
+
+    let match = true
+    newLastMoveIdsState.forEach((moveId) => {
+      if (this.state.cards[moveId].icon !== this.state.cards[id].icon) {
+        match = false
+      }
+    })
+
+    if (match) {
       newCardsState[id].flipped = true
-      newCardsState[this.state.lastMoveId].matched = true
-      this.setState({
-        cards: newCardsState,
-        lastMoveId: null,
-        locked: false })
+
+      if ((this.state.difficulty === 'easy' && newLastMoveIdsState.length === 2) ||
+          (this.state.difficulty === 'hard' && newLastMoveIdsState.length === 2) ||
+          (this.state.difficulty === 'triples' && newLastMoveIdsState.length === 3)) {
+            newLastMoveIdsState.forEach((lastMoveId) => {
+              newCardsState[lastMoveId].matched = true
+            })
+            newLastMoveIdsState = []
+      }
+      this.setState({ cards: newCardsState, lastMoveIds: newLastMoveIdsState, locked: false })
     } else {
       setTimeout(() => {
-        newCardsState[id].flipped = false
-        newCardsState[this.state.lastMoveId].flipped = false
+        newLastMoveIdsState.forEach((lastMoveId) => {
+          newCardsState[lastMoveId].flipped = false
+        })
         this.setState({
           cards: newCardsState,
-          lastMoveId: null,
+          lastMoveIds: [],
           locked: false })
       }, 500)
     }
+
+
+    // if (this.state.cards[id].icon === this.state.cards[this.state.lastMoveId].icon) {
+    //   newCardsState[id].matched = true
+    //   newCardsState[id].flipped = true
+    //   newCardsState[this.state.lastMoveId].matched = true
+    //   this.setState({
+    //     cards: newCardsState,
+    //     lastMoveId: null,
+    //     locked: false })
+    // } else {
+    //   setTimeout(() => {
+    //     newCardsState[id].flipped = false
+    //     newCardsState[this.state.lastMoveId].flipped = false
+    //     this.setState({
+    //       cards: newCardsState,
+    //       lastMoveId: null,
+    //       locked: false })
+    //   }, 500)
+    // }
   }
 
   gameWon() {

@@ -37,6 +37,9 @@ export default class Start extends React.Component {
           <div className={styles.hard + ' ' + hardSelected} onClick={() => this.selectDifficulty('hard')}>
             Hard
           </div>
+          <div className={styles.hard + ' ' + hardSelected} onClick={() => this.selectDifficulty('triples')}>
+            Triples
+          </div>
         </div>
         <div className={styles.butttonContainer}>
           <div className={styles.timedGame} onClick={this.props.startTimedGame}>
