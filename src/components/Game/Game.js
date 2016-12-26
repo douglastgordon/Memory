@@ -26,6 +26,7 @@ export default class Game extends React.Component {
 
   componentWillMount() {
     this.props.requestCards()
+    this.props.requestTriples()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,9 +34,10 @@ export default class Game extends React.Component {
   }
 
   setCards(data) {
+    debugger
     const cards = []
     let icons = []
-    data.levels.forEach((level) => {
+    data.forEach((level) => {
       if (level.difficulty === this.state.difficulty) {
         icons = level.cards
       }
@@ -166,4 +168,5 @@ export default class Game extends React.Component {
 Game.propTypes = {
   cards: React.PropTypes.object.isRequired,
   requestCards: React.PropTypes.func.isRequired,
+  requestTriples: React.PropTypes.func.isRequired,
 }

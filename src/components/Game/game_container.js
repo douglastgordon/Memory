@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Game from './game'
-import { requestCards } from '../../actions/card_actions'
+import { requestCards, requestTriples } from '../../actions/card_actions'
 
 const mapStateToProps = state => ({
   cards: state.cards,
@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   requestCards: () => dispatch(requestCards()),
+  requestTriples: () => dispatch(requestTriples()),
 })
 
 export default connect(
