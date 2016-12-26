@@ -45,6 +45,9 @@ export default class Start extends React.Component {
           <div className={styles.timedGame} onClick={this.props.startTimedGame}>
             Timed Game
           </div>
+          <div className={styles.timedGame} onClick={this.props.startFlipsGame}>
+            Fewest Flips
+          </div>
         </div>
       </div>
     )
@@ -53,6 +56,7 @@ export default class Start extends React.Component {
 
 Start.propTypes = {
   startTimedGame: React.PropTypes.func,
+  startFlipsGame: React.PropTypes.func,
   changeDifficulty: React.PropTypes.func,
 
 }

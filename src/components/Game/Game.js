@@ -12,15 +12,17 @@ export default class Game extends React.Component {
     this.processMove = this.processMove.bind(this)
     this.changeDifficulty = this.changeDifficulty.bind(this)
     this.startTimedGame = this.startTimedGame.bind(this)
+    this.startFlipsGame = this.startFlipsGame.bind(this)
     this.updateTimer = this.updateTimer.bind(this)
     this.state = {
       difficulty: 'easy',
       cards: [],
-      running: false,
-      // lastMoveId: null,
+      timedRunning: false,
+      flipsRunning: false,
       lastMoveIds: [],
       locked: true,
       elapsedTime: 0,
+      flips: 0,
       won: false,
     }
   }
@@ -55,6 +57,7 @@ export default class Game extends React.Component {
       return
     } else {
       newCardsState[id].flipped = true
+      this.setState({ flips: this.state.flips + 1 })
     }
     const lastMoveIds = this.state.lastMoveIds
     if (lastMoveIds.length === 0) {
@@ -67,7 +70,7 @@ export default class Game extends React.Component {
       this.checkMatch(id)
     }
     if (this.gameWon()) {
-      this.setState({ running: false, locked: true, won: true })
+      this.setState({ timedRunning: false, flipsRunning: false, locked: true, won: true })
     }
   }
 
@@ -146,7 +149,11 @@ export default class Game extends React.Component {
   }
 
   startTimedGame() {
-    this.setState({ running: true, locked: false })
+    this.setState({ timedRunning: true, locked: false })
+  }
+
+  startFlipsGame() {
+    this.setState({ flipsRunning: true, locked: false })
   }
 
   updateTimer() {
@@ -155,16 +162,19 @@ export default class Game extends React.Component {
 
   render() {
     const cards = this.makeCards()
-    let timer
+    let score
     let start
     let winner
 
-    if (this.state.running) {
-      timer = <Timer updateTimer={this.updateTimer} />
+    if (this.state.timedRunning) {
+      score = <Timer updateTimer={this.updateTimer} />
+    } else if (this.state.flipsRunning) {
+      score = <h3>{this.state.flips}</h3>
     } else {
       start =
       <Start
         startTimedGame={this.startTimedGame}
+        startFlipsGame={this.startFlipsGame}
         changeDifficulty={this.changeDifficulty}
       />
     }
@@ -176,7 +186,7 @@ export default class Game extends React.Component {
     return (
       <div>
         <h1 className={styles.header}>Memory Game</h1>
-        {timer}
+        {score}
 
         <div className={styles.content}>
           {start}
