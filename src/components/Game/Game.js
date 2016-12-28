@@ -52,13 +52,14 @@ export default class Game extends React.Component {
   }
 
   processMove(id) {
+    if (this.state.locked) return
+
     const newCardsState = this.state.cards
-    if (this.state.locked) {
-      return
-    } else {
-      newCardsState[id].flipped = true
-      this.setState({ flips: this.state.flips + 1 })
-    }
+    newCardsState[id].flipped = true
+    this.setState({ flips: this.state.flips + 1 })
+
+    this.playAudio()
+
     const lastMoveIds = this.state.lastMoveIds
     if (lastMoveIds.length === 0) {
       this.setState({ cards: newCardsState, lastMoveIds: [id], locked: true },
@@ -74,6 +75,11 @@ export default class Game extends React.Component {
     }
   }
 
+  playAudio() {
+    debugger
+    document.getElementById('audio').play()
+  }
+
   checkMatch(id) {
     const newCardsState = this.state.cards
     let newLastMoveIdsState = this.state.lastMoveIds
@@ -85,10 +91,10 @@ export default class Game extends React.Component {
       if ((this.state.difficulty === 'easy' && newLastMoveIdsState.length === 2) ||
           (this.state.difficulty === 'hard' && newLastMoveIdsState.length === 2) ||
           (this.state.difficulty === 'triples' && newLastMoveIdsState.length === 3)) {
-            newLastMoveIdsState.forEach((lastMoveId) => {
-              newCardsState[lastMoveId].matched = true
-            })
-            newLastMoveIdsState = []
+        newLastMoveIdsState.forEach((lastMoveId) => {
+          newCardsState[lastMoveId].matched = true
+        })
+        newLastMoveIdsState = []
       }
       this.setState({ cards: newCardsState, lastMoveIds: newLastMoveIdsState, locked: false })
     } else {
@@ -172,11 +178,11 @@ export default class Game extends React.Component {
       score = <h3>{this.state.flips}</h3>
     } else {
       start =
-      <Start
+      (<Start
         startTimedGame={this.startTimedGame}
         startFlipsGame={this.startFlipsGame}
         changeDifficulty={this.changeDifficulty}
-      />
+      />)
     }
 
     if (this.state.won) {
@@ -195,6 +201,9 @@ export default class Game extends React.Component {
             {cards}
           </div>
         </div>
+        <audio id="audio" className={styles.flipSound}>
+          <source src="../../assets/card_flip.wav" type="audio/wav" />
+        </audio>
 
       </div>
     )
@@ -202,7 +211,7 @@ export default class Game extends React.Component {
 }
 
 Game.propTypes = {
-  cards: React.PropTypes.object.isRequired,
+  cards: React.PropTypes.array.isRequired,
   requestCards: React.PropTypes.func.isRequired,
   requestTriples: React.PropTypes.func.isRequired,
 }
