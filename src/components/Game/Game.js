@@ -188,6 +188,8 @@ export default class Game extends React.Component {
       winner = <Winner elapsedTime={this.state.elapsedTime} />
     }
 
+    const extended = this.state.difficulty === 'triples' ? styles.wide : ''
+
     return (
       <div>
         <h1 className={styles.header}>Memory Game</h1>
@@ -196,7 +198,7 @@ export default class Game extends React.Component {
         <div className={styles.content}>
           {start}
           {winner}
-          <div className={styles.gamearea}>
+          <div className={styles.gamearea + ' ' + extended}>
             {cards}
           </div>
         </div>

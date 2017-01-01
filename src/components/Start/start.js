@@ -10,7 +10,7 @@ export default class Start extends React.Component {
     this.startGame = this.startGame.bind(this)
     this.state = {
       difficulty: 'easy',
-      mode: 'timedGame'
+      mode: 'timedGame',
     }
   }
 
