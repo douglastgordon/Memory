@@ -9,14 +9,19 @@ export default class Card extends React.Component {
   }
 
   flip(e) {
-    this.props.processMove(e.target.id)
+    this.props.processMove(e.currentTarget.id)
   }
 
   render() {
-    const icon = this.props.flipped ? this.props.icon : ''
+    const clicked = this.props.flipped ? styles.clicked : ''
     return (
-      <div className={styles.card} id={this.props.id} onClick={this.flip}>
-        <p>{icon}</p>
+      <div className={styles.cardContainer + ' ' + clicked} id={this.props.id} onClick={this.flip}>
+        <div className={styles.flipper}>
+          <div className={styles.front} />
+          <div className={styles.back}>
+            <p>{this.props.icon}</p>
+          </div>
+        </div>
       </div>
     )
   }
@@ -28,3 +33,8 @@ Card.propTypes = {
   processMove: React.PropTypes.func.isRequired,
   flipped: React.PropTypes.bool.isRequired,
 }
+
+
+// <div className={styles.card} id={this.props.id} onClick={this.flip}>
+//   <p>{icon}</p>
+// </div>
