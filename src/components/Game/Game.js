@@ -53,9 +53,10 @@ export default class Game extends React.Component {
   }
 
   processMove(id) {
-    if (this.state.locked) return
-
     const newCardsState = this.state.cards
+
+    if (this.state.locked || newCardsState[id].flipped === true) return
+
     newCardsState[id].flipped = true
     this.setState({ flips: this.state.flips + 1 })
 
@@ -198,7 +199,7 @@ export default class Game extends React.Component {
       score = <Timer className={styles.score} updateTimer={this.updateTimer} />
     } else if (this.state.flipsRunning) {
       score = <p className={styles.score}>{this.state.flips}</p>
-    }    
+    }
     if (!this.state.timedRunning && !this.state.flipsRunning && !this.state.won) {
       start =
       (<Start
