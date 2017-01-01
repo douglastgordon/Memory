@@ -15,6 +15,7 @@ export default class Game extends React.Component {
     this.startFlipsGame = this.startFlipsGame.bind(this)
     this.updateTimer = this.updateTimer.bind(this)
     this.quit = this.quit.bind(this)
+    this.playAgain = this.playAgain.bind(this)
     this.state = {
       difficulty: 'easy',
       cards: [],
@@ -180,6 +181,22 @@ export default class Game extends React.Component {
     this.changeDifficulty('easy')
   }
 
+  playAgain(mode) {
+    this.changeDifficulty(this.state.difficulty)
+    if (mode === 'timed') {
+      this.setState({ timedRunning: true })
+    } else {
+      this.setState({ timedRunning: true })
+    }
+    this.setState({
+      lastMoveIds: [],
+      locked: false,
+      elapsedTime: 0,
+      flips: 0,
+      won: false,
+    })
+  }
+
   render() {
     const cards = this.makeCards()
     let score
@@ -215,6 +232,8 @@ export default class Game extends React.Component {
           difficulty={this.state.difficulty}
           elapsedTime={this.state.elapsedTime}
           flips={this.state.flips}
+          settings={this.quit}
+          playAgain={this.playAgain}
         />
       )
     }

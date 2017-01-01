@@ -1,10 +1,46 @@
+$button-height: 40px;
 .winContainer {
   background-color: white;
   border-radius: 5px;
   width: 300px;
-  height: 250px;
+  height: 175px;
   z-index: 1;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   font-family: 'PT Sans Narrow', sans-serif;
   color: black;
+  text-align: center;
+
+  .butttonContainer {
+    width: 100%;
+    display: flex;
+    height: $button-height;
+    justify-content: space-around;
+    align-items: center;
+
+    .playAgain, .settings {
+      color: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      width: 80px;
+      height: $button-height;
+      line-height: $button-height;
+      border: 1px solid #d4d4d4;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+
+      &:hover {
+        border-color: #8BC34A;
+        box-shadow: 0 7px 14px rgba(0,0,0,0.13), 0 10px 10px rgba(0,0,0,0.11);
+      }
+    }
+
+    .playAgain {
+      background: #4CAF50;
+    }
+
+    .settings {
+      background: #2196F3
+    }
+
+  }
 }
