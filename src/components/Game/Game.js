@@ -76,7 +76,6 @@ export default class Game extends React.Component {
   }
 
   playAudio() {
-    debugger
     document.getElementById('audio').play()
   }
 

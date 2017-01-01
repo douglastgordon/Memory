@@ -9,11 +9,8 @@ export default class Card extends React.Component {
   }
 
   flip(e) {
-    // debugger
     this.props.processMove(e.target.id)
   }
-
-
 
   render() {
     const icon = this.props.flipped ? this.props.icon : ''

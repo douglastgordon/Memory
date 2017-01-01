@@ -1,4 +1,5 @@
 $button-height: 40px;
+$tall-button-height: 60px;
 
 .container {
   margin: 0 auto;
@@ -8,49 +9,63 @@ $button-height: 40px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   width: 300px;
-  height: 400px;
+  height: 250px;
   z-index: 1;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  font-family: 'Montserrat', sans-serif;
-  color: white;
+  font-family: 'PT Sans Narrow', sans-serif;
+  color: black;
 }
 
 .butttonContainer {
-  display: flex;
   width: 100%;
-  height: $button-height;
-  border: 1px solid red;
+  display: flex;
+  height: $tall-button-height;
   justify-content: space-around;
-
+  align-items: center;
   .easy,
   .hard,
-  .timedGame {
+  .triples,
+  .timedGame,
+  .flipGame,
+  .begin {
     width: 80px;
     height: $button-height;
     line-height: $button-height;
-    border-radius: 3px;
+    border: 1px solid #d4d4d4;
+    border-bottom-width: 5px;
+    border-right-width: 5px;
+    border-radius: 8px;
     text-align: center;
     cursor: pointer;
+    &:hover {
+      background-color: #c8ebff;
+      border-color: #a7d8ff;
+    }
   }
 
-  .easy,
-  .hard, {
-      background: #3F51B5;
+  .timedGame,
+  .flipGame {
+    height: $tall-button-height;
+    line-height: $tall-button-height / 2;
+  }
+  .begin {
+    color: white;
+    border: 1px solid #d4d4d4;
+    background: #4CAF50;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     &:hover {
-      background: #303F9F
+    background: #4CAF50;
+    border-color: #8BC34A;
+    box-shadow: 0 7px 14px rgba(0,0,0,0.13), 0 10px 10px rgba(0,0,0,0.11);
     }
   }
 
   .selected {
-    background: #9E9E9E;
+    background-color: #c8ebff;
+    border-color: #a7d8ff;
+    border-right: 0;
+    border-bottom: 0;
   }
-
-  .timedGame {
-    background: #4CAF50;
-    &:hover {
-      background: #388E3C
-    }
-  }
-
 }

@@ -12,7 +12,8 @@ app.get('/', (req, res) => {
     <html>
       <head>
         <meta charset="utf-8" />
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <title>Memory</title>
       </head>
       <body>

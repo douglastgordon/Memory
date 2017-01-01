@@ -23,12 +23,3 @@ document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root')
   ReactDOM.render(<App store={store} />, root)
 })
-
-
-// if (module.hot) {
-//   module.hot.accept('./../components/App', () => {
-//     System.import('./../components/App').then(RootComponent => mount(RootComponent.default))
-//   })
-// }
-//
-// mount(App)
