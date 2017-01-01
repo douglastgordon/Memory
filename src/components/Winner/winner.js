@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './winner.scss'
 
 export default class Winner extends React.Component {
 
@@ -8,7 +9,7 @@ export default class Winner extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.winContainer}>
         <h2>You Win!</h2>
         <p>{this.props.elapsedTime}</p>
       </div>

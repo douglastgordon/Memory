@@ -198,7 +198,8 @@ export default class Game extends React.Component {
       score = <Timer className={styles.score} updateTimer={this.updateTimer} />
     } else if (this.state.flipsRunning) {
       score = <p className={styles.score}>{this.state.flips}</p>
-    } else {
+    }    
+    if (!this.state.timedRunning && !this.state.flipsRunning && !this.state.won) {
       start =
       (<Start
         startTimedGame={this.startTimedGame}
@@ -208,7 +209,13 @@ export default class Game extends React.Component {
     }
 
     if (this.state.won) {
-      winner = <Winner elapsedTime={this.state.elapsedTime} />
+      winner = (
+        <Winner
+          difficulty={this.state.difficulty}
+          elapsedTime={this.state.elapsedTime}
+          flips={this.state.flips}
+        />
+      )
     }
 
     const extended = this.state.difficulty === 'triples' ? styles.wide : ''
