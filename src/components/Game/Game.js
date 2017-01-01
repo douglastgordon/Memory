@@ -3,6 +3,7 @@ import Timer from '../Timer/Timer'
 import Card from '../Card/card'
 import Winner from '../Winner/winner'
 import Start from '../Start/start'
+import SwatchSelector from '../SwatchSelector/swatch_selector'
 import styles from './Game.scss'
 
 export default class Game extends React.Component {
@@ -16,6 +17,7 @@ export default class Game extends React.Component {
     this.updateTimer = this.updateTimer.bind(this)
     this.quit = this.quit.bind(this)
     this.playAgain = this.playAgain.bind(this)
+    this.changeSwatch = this.changeSwatch.bind(this)
     this.state = {
       difficulty: 'easy',
       cards: [],
@@ -26,6 +28,7 @@ export default class Game extends React.Component {
       elapsedTime: 0,
       flips: 0,
       won: false,
+      swatch: 'barber',
     }
   }
 
@@ -197,6 +200,10 @@ export default class Game extends React.Component {
     })
   }
 
+  changeSwatch(swatch) {
+    this.setState({ swatch })
+  }
+
   render() {
     const cards = this.makeCards()
     let score
@@ -238,6 +245,12 @@ export default class Game extends React.Component {
       )
     }
 
+    const swatch = (
+      <SwatchSelector
+        swatch={this.state.swatch}
+        changeSwatch={this.changeSwatch} />
+    )
+
     const extended = this.state.difficulty === 'triples' ? styles.wide : ''
 
     return (
@@ -252,6 +265,7 @@ export default class Game extends React.Component {
           </div>
         </div>
         {quit}
+        {swatch}
         <audio id="audio" className={styles.flipSound}>
           <source src="../../assets/card_flip.wav" type="audio/wav" />
         </audio>
