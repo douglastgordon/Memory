@@ -192,10 +192,9 @@ export default class Game extends React.Component {
 
     return (
       <div>
-        <h1 className={styles.header}>Memory Game</h1>
-        {score}
-
+        <h1 className={styles.header}>Memory</h1>
         <div className={styles.content}>
+          {score}
           {start}
           {winner}
           <div className={styles.gamearea + ' ' + extended}>
