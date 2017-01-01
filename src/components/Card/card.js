@@ -33,8 +33,3 @@ Card.propTypes = {
   processMove: React.PropTypes.func.isRequired,
   flipped: React.PropTypes.bool.isRequired,
 }
-
-
-// <div className={styles.card} id={this.props.id} onClick={this.flip}>
-//   <p>{icon}</p>
-// </div>

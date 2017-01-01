@@ -15,7 +15,7 @@ export const formatTime = (time) => {
 
 const Timer = ({ time = 0 }) => (
   <div className={styles.timer}>
-    {formatTime(time)}
+    <p>{formatTime(time)}</p>
   </div>
 )
 

@@ -14,6 +14,7 @@ export default class Game extends React.Component {
     this.startTimedGame = this.startTimedGame.bind(this)
     this.startFlipsGame = this.startFlipsGame.bind(this)
     this.updateTimer = this.updateTimer.bind(this)
+    this.quit = this.quit.bind(this)
     this.state = {
       difficulty: 'easy',
       cards: [],
@@ -165,16 +166,38 @@ export default class Game extends React.Component {
     this.setState({ elapsedTime: this.state.elapsedTime + 1 })
   }
 
+  quit() {
+    this.setState({
+      timedRunning: false,
+      flipsRunning: false,
+      lastMoveIds: [],
+      locked: true,
+      elapsedTime: 0,
+      flips: 0,
+      won: false,
+    })
+    this.changeDifficulty('easy')
+  }
+
   render() {
     const cards = this.makeCards()
     let score
     let start
     let winner
+    let quit
+
+    if (this.state.timedRunning || this.state.flipsRunning) {
+      quit = (
+        <div className={styles.quit}>
+          <p onClick={this.quit}>Quit</p>
+        </div>
+      )
+    }
 
     if (this.state.timedRunning) {
-      score = <Timer updateTimer={this.updateTimer} />
+      score = <Timer className={styles.score} updateTimer={this.updateTimer} />
     } else if (this.state.flipsRunning) {
-      score = <h3>{this.state.flips}</h3>
+      score = <p className={styles.score}>{this.state.flips}</p>
     } else {
       start =
       (<Start
@@ -191,16 +214,17 @@ export default class Game extends React.Component {
     const extended = this.state.difficulty === 'triples' ? styles.wide : ''
 
     return (
-      <div>
+      <div className={styles.body}>
         <h1 className={styles.header}>Memory</h1>
+        {score}
         <div className={styles.content}>
-          {score}
           {start}
           {winner}
           <div className={styles.gamearea + ' ' + extended}>
             {cards}
           </div>
         </div>
+        {quit}
         <audio id="audio" className={styles.flipSound}>
           <source src="../../assets/card_flip.wav" type="audio/wav" />
         </audio>

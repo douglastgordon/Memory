@@ -1,8 +1,13 @@
+.body {
+  position: relative;
+}
+
 .header {
   color: #333;
   font-family: sans-serif;
   text-align: center;
-  margin-top: 100px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   font-family: 'Space Mono', monospace;
 }
 
@@ -27,4 +32,29 @@
 
 .wide {
   width: 530px;
+}
+
+.score, .quit {
+  font-family: 'PT Sans Narrow', sans-serif;
+  font-size: 24px;
+  text-align: center;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+
+.score {
+  margin-top: -20px;
+}
+
+.quit {
+  font-size: 16px;
+  p {
+    margin: 0;
+    display: inline-block;
+    cursor: pointer;
+  }
 }
