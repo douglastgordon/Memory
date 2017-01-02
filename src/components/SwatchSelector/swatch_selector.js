@@ -4,10 +4,6 @@ import swatches from '../../assets/swatches.scss'
 
 export default class SwatchSelector extends React.Component {
 
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     let barberSelect
     let blackAndWhiteSelect

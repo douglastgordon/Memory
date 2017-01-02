@@ -9,6 +9,7 @@
   "author": "NYT",
   "license": "Apache-2.0",
   "dependencies": {
+    "buzz": "^1.2.0",
     "enzyme": "^2.6.0",
     "express": "^4.14.0",
     "kyt": "^0.3.0",
