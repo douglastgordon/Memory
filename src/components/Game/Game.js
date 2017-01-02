@@ -6,6 +6,16 @@ import Start from '../Start/start'
 import SwatchSelector from '../SwatchSelector/swatch_selector'
 import styles from './Game.scss'
 
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
+  }
+  return array
+}
+
 export default class Game extends React.Component {
 
   constructor(props) {
@@ -38,15 +48,15 @@ export default class Game extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setCards(nextProps.cards)
+    this.setCardsState(nextProps.cards)
   }
 
-  setCards(data) {
+  setCardsState(data) {
     const cards = []
     let icons = []
     data.forEach((level) => {
       if (level.difficulty === this.state.difficulty) {
-        icons = level.cards
+        icons = shuffleArray(level.cards)
       }
     })
     icons.forEach((icon) => {
@@ -59,30 +69,27 @@ export default class Game extends React.Component {
   processMove(id) {
     const newCardsState = this.state.cards
 
+    // stop player from clicking too quickly or on flipped card
     if (this.state.locked || newCardsState[id].flipped === true) return
 
+    // flips selected card
     newCardsState[id].flipped = true
     this.setState({ flips: this.state.flips + 1 })
 
-    this.playAudio()
-
     const lastMoveIds = this.state.lastMoveIds
-    if (lastMoveIds.length === 0) {
+    if (lastMoveIds.length === 0) { // first flip of set is always flipped
       this.setState({ cards: newCardsState, lastMoveIds: [id], locked: true },
       () => {
         this.setState({ locked: false })
       })
-    } else {
+    } else { // subsequent flips must be checked for matches
       this.setState({ cards: newCardsState, locked: true })
       this.checkMatch(id)
     }
+    // check if won
     if (this.gameWon()) {
       this.setState({ timedRunning: false, flipsRunning: false, locked: true, won: true })
     }
-  }
-
-  playAudio() {
-    document.getElementById('audio').play()
   }
 
   checkMatch(id) {
@@ -154,9 +161,11 @@ export default class Game extends React.Component {
     return []
   }
 
+
+  // methods for Start component
   changeDifficulty(difficulty) {
     this.setState({ difficulty }, () => {
-      this.setCards(this.props.cards)
+      this.setCardsState(this.props.cards)
     })
   }
 
@@ -172,6 +181,8 @@ export default class Game extends React.Component {
     this.setState({ elapsedTime: this.state.elapsedTime + 1 })
   }
 
+
+  // Methods for Winner component
   quit() {
     this.setState({
       timedRunning: false,
@@ -201,6 +212,7 @@ export default class Game extends React.Component {
     })
   }
 
+  // method for SwatchSelector component
   changeSwatch(e) {
     const swatch = e.target.id
     if (swatch !== '0') {
@@ -210,11 +222,9 @@ export default class Game extends React.Component {
 
   render() {
     const cards = this.makeCards()
-    let score
-    let start
-    let winner
-    let quit
 
+    // quit game button
+    let quit
     if (this.state.timedRunning || this.state.flipsRunning) {
       quit = (
         <p className={styles.quit} onClick={this.quit}>
@@ -223,11 +233,16 @@ export default class Game extends React.Component {
       )
     }
 
+    // score indicator (either time or flips)
+    let score
     if (this.state.timedRunning) {
       score = <Timer className={styles.score} updateTimer={this.updateTimer} />
     } else if (this.state.flipsRunning) {
       score = <p className={styles.score}>{this.state.flips}</p>
     }
+
+    // game setup display
+    let start
     if (!this.state.timedRunning && !this.state.flipsRunning && !this.state.won) {
       start =
       (<Start
@@ -237,6 +252,8 @@ export default class Game extends React.Component {
       />)
     }
 
+    // game won display
+    let winner
     if (this.state.won) {
       winner = (
         <Winner
@@ -249,12 +266,6 @@ export default class Game extends React.Component {
       )
     }
 
-    const swatch = (
-      <SwatchSelector
-        swatch={this.state.swatch}
-        changeSwatch={this.changeSwatch} />
-    )
-
     const extended = this.state.difficulty === 'triples' ? styles.wide : ''
 
     return (
@@ -264,23 +275,22 @@ export default class Game extends React.Component {
         <div className={styles.content}>
           {start}
           {winner}
-          <div className={styles.gamearea + ' ' + extended}>
+          <div className={`${styles.gamearea} ${extended}`}>
             {cards}
           </div>
         </div>
         {quit}
-        {swatch}
-        <audio id="audio" className={styles.flipSound}>
-          <source src="../../assets/card_flip.wav" type="audio/wav" />
-        </audio>
-
+        <SwatchSelector
+          swatch={this.state.swatch}
+          changeSwatch={this.changeSwatch}
+        />
       </div>
     )
   }
 }
 
 Game.propTypes = {
-  cards: React.PropTypes.array.isRequired,
+  cards: React.PropTypes.arrayOf(React.PropTypes.object),
   requestCards: React.PropTypes.func.isRequired,
   requestTriples: React.PropTypes.func.isRequired,
 }
