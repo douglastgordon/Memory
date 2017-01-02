@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './card.scss'
+import swatches from '../../assets/swatches.scss'
 
 export default class Card extends React.Component {
 
@@ -18,19 +19,19 @@ export default class Card extends React.Component {
     let swatch
     switch (this.props.swatch) {
       case 'barber':
-        swatch = styles.barber
+        swatch = swatches.barber
         break
       case 'blackAndWhite':
-        swatch = styles.blackAndWhite
+        swatch = swatches.blackAndWhite
         break
       case 'bullseye':
-        swatch = styles.bullseye
+        swatch = swatches.bullseye
         break
       case 'autumn':
-        swatch = styles.autumn
+        swatch = swatches.autumn
         break
       case 'mellow':
-        swatch = styles.mellow
+        swatch = swatches.mellow
         break
       default:
         break

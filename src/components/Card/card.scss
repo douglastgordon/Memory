@@ -5,9 +5,9 @@ $card-width: 80px;
 }
 
 	/* flip the pane when hovered */
- .cardContainer.clicked .flipper {
-		transform: rotateY(180deg);
-	}
+.cardContainer.clicked .flipper {
+	transform: rotateY(180deg);
+}
 
 .cardContainer, .front, .back {
 	width: $card-width;
@@ -25,6 +25,10 @@ $card-width: 80px;
 }
 
 .front, .back {
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   &:hover{
     box-shadow: 0 14px 28px rgba(0,0,0,0.13), 0 10px 10px rgba(0,0,0,0.11);
@@ -38,14 +42,6 @@ $card-width: 80px;
 	position: relative;
 }
 
-/* hide back of pane during swap */
-.front, .back {
-	backface-visibility: hidden;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
 /* front pane, placed above back */
 .front {
 	z-index: 2;
@@ -54,77 +50,14 @@ $card-width: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
+  .design {
+    width: $card-width - 10;
+    height: $card-width - 10;
+    border-radius: 6px;
+  }
 }
 
 /* back, initially hidden pane */
 .back {
 	transform: rotateY(180deg);
-}
-
-.design {
-  width: $card-width - 10;
-  height: $card-width - 10;
-  border-radius: 6px;
-}
-
-.barber {
-  background: repeating-linear-gradient(
-    45deg,
-    #FF5252,
-    #FF5252 10px,
-    #FFFFFF 10px,
-    #FFFFFF 20px
-  );
-}
-
-.blackAndWhite {
-  background: repeating-linear-gradient(
-    45deg,
-    #000000,
-    #000000 10px,
-    #FFFFFF 10px,
-    #FFFFFF 20px
-  );
-}
-
-.bullseye {
-  background: repeating-radial-gradient(
-  circle,
-  #FF5252,
-  #FF5252 3px,
-  #FFFFFF 3px,
-  #FFFFFF 6px
-  );
-}
-
-.autumn {
-  background: repeating-linear-gradient(
-    45deg,
-    #E1CE7A,
-    #E1CE7A 5px,
-    #FBFFB9	5px,
-    #FBFFB9	10px,
-    #FDD692	10px,
-    #FDD692 15px,
-    #EC7357	15px,
-    #EC7357	20px,
-    #754F44	20px,
-    #754F44	25px
-  );
-}
-
-.mellow {
-  background: repeating-linear-gradient(
-    45deg,
-    #8E3B46,
-    #8E3B46 5px,
-    #E1DD8F	5px,
-    #E1DD8F	10px,
-    #E0777D	10px,
-    #E0777D 15px,
-    #4C86A8	15px,
-    #4C86A8	20px,
-    #477890	20px,
-    #477890	25px
-  );
 }
