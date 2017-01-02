@@ -37,10 +37,14 @@ export default class Card extends React.Component {
     }
 
     return (
-      <div className={styles.cardContainer + ' ' + clicked} id={this.props.id} onClick={this.flip}>
+      <div
+        className={`${styles.cardContainer} ${clicked}`}
+        id={this.props.id}
+        onClick={this.flip}
+      >
         <div className={styles.flipper}>
           <div className={styles.front}>
-            <div className={styles.design + ' ' + swatch}></div>
+            <div className={`${styles.design} ${swatch}`} />
           </div>
           <div className={styles.back}>
             <p>{this.props.icon}</p>
