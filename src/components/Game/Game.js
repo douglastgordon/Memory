@@ -148,6 +148,7 @@ export default class Game extends React.Component {
           flipped={card.flipped}
           matched={card.matched}
           processMove={this.processMove}
+          swatch={this.state.swatch}
         />
     ) }
     return []
