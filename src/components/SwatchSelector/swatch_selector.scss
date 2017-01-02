@@ -1,13 +1,18 @@
 .butttonContainer {
   width: 240px;
   display: flex;
-  justify-content: space-around; 
+  justify-content: space-around;
 
 }
 
 .swatch {
   width: 40px;
   height: 40px;
+  cursor: pointer;
+}
+
+.swatchSelect {
+  border: 3px solid black;
 }
 
 .barber {

@@ -36,26 +36,30 @@ export default class SwatchSelector extends React.Component {
     }
 
     return (
-      <div className={styles.butttonContainer}>
+      <div
+        id="0"
+        className={styles.butttonContainer}
+        onClick={(e) => { this.props.changeSwatch(e) }}
+      >
         <div
           className={styles.swatch + ' ' + styles.barber + ' ' + barberSelect}
-          onClick={() => { this.props.changeSwatch('barber') }}
+          id="barber"
         />
         <div
           className={styles.swatch + ' ' + styles.blackAndWhite + ' ' + blackAndWhiteSelect}
-          onClick={() => { this.props.changeSwatch('blackAndWhite') }}
-         />
+          id="blackAndWhite"
+        />
         <div
           className={styles.swatch + ' ' + styles.bullseye + ' ' + bullseyeSelect}
-          onClick={() => { this.props.changeSwatch('bullseye') }}
+          id="bullseye"
         />
         <div
           className={styles.swatch + ' ' + styles.autumn + ' ' + autumnSelect}
-          onClick={() => { this.props.changeSwatch('autumn') }}
+          id="autumn"
         />
         <div
           className={styles.swatch + ' ' + styles.mellow + ' ' + mellowSelect}
-          onClick={() => { this.props.changeSwatch('mellow') }}
+          id="mellow"
         />
       </div>
     )

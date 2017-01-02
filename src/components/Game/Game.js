@@ -201,8 +201,11 @@ export default class Game extends React.Component {
     })
   }
 
-  changeSwatch(swatch) {
-    this.setState({ swatch })
+  changeSwatch(e) {
+    const swatch = e.target.id
+    if (swatch !== 0) {
+      this.setState({ swatch })
+    }
   }
 
   render() {
@@ -214,9 +217,9 @@ export default class Game extends React.Component {
 
     if (this.state.timedRunning || this.state.flipsRunning) {
       quit = (
-        <div className={styles.quit}>
-          <p onClick={this.quit}>Quit</p>
-        </div>
+        <p className={styles.quit} onClick={this.quit}>
+          Quit
+        </p>
       )
     }
 
