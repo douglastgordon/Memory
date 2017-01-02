@@ -19,11 +19,6 @@ const Timer = ({ time = 0 }) => (
   </div>
 )
 
-Timer.propTypes = {
-  updateTimer: React.PropTypes.func.isRequired,
-  time: React.PropTypes.number,
-}
-
 class TimerContainer extends React.Component {
 
   constructor(props) {
@@ -53,6 +48,11 @@ class TimerContainer extends React.Component {
       <Timer time={this.state.secondsElapsed} />
     )
   }
+}
+
+Timer.propTypes = {
+  updateTimer: React.PropTypes.func.isRequired,
+  time: React.PropTypes.number,
 }
 
 export default TimerContainer

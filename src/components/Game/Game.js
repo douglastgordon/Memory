@@ -150,6 +150,7 @@ export default class Game extends React.Component {
     if (this.state.cards.length > 0) {
       return this.state.cards.map((card, id) =>
         <Card
+          key={id}
           id={id}
           icon={card.icon}
           flipped={card.flipped}

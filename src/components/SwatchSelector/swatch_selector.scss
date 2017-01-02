@@ -2,77 +2,13 @@
   width: 240px;
   display: flex;
   justify-content: space-around;
+  .swatch {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
 
-}
-
-.swatch {
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-}
-
-.swatchSelect {
-  border: 3px solid black;
-}
-
-.barber {
-  background: repeating-linear-gradient(
-    45deg,
-    #FF5252,
-    #FF5252 10px,
-    #FFFFFF 10px,
-    #FFFFFF 20px
-  );
-}
-
-.blackAndWhite {
-  background: repeating-linear-gradient(
-    45deg,
-    #000000,
-    #000000 10px,
-    #FFFFFF 10px,
-    #FFFFFF 20px
-  );
-}
-
-.bullseye {
-  background: repeating-radial-gradient(
-  circle,
-  #FF5252,
-  #FF5252 3px,
-  #FFFFFF 3px,
-  #FFFFFF 6px
-  );
-}
-
-.autumn {
-  background: repeating-linear-gradient(
-    45deg,
-    #E1CE7A,
-    #E1CE7A 5px,
-    #FBFFB9	5px,
-    #FBFFB9	10px,
-    #FDD692	10px,
-    #FDD692 15px,
-    #EC7357	15px,
-    #EC7357	20px,
-    #754F44	20px,
-    #754F44	25px
-  );
-}
-
-.mellow {
-  background: repeating-linear-gradient(
-    45deg,
-    #8E3B46,
-    #8E3B46 5px,
-    #E1DD8F	5px,
-    #E1DD8F	10px,
-    #E0777D	10px,
-    #E0777D 15px,
-    #4C86A8	15px,
-    #4C86A8	20px,
-    #477890	20px,
-    #477890	25px
-  );
+  .swatchSelect {
+    border: 3px solid black;
+  }
 }

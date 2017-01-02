@@ -3,10 +3,6 @@ import styles from './winner.scss'
 
 export default class Winner extends React.Component {
 
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     let message
     let mode

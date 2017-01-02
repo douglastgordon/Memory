@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './swatch_selector.scss'
+import swatches from '../../assets/swatches.scss'
 
 export default class SwatchSelector extends React.Component {
 
@@ -42,29 +43,28 @@ export default class SwatchSelector extends React.Component {
         onClick={(e) => { this.props.changeSwatch(e) }}
       >
         <div
-          className={styles.swatch + ' ' + styles.barber + ' ' + barberSelect}
+          className={`${styles.swatch} ${swatches.barber} ${barberSelect}`}
           id="barber"
         />
         <div
-          className={styles.swatch + ' ' + styles.blackAndWhite + ' ' + blackAndWhiteSelect}
+          className={`${styles.swatch} ${swatches.blackAndWhite} ${blackAndWhiteSelect}`}
           id="blackAndWhite"
         />
         <div
-          className={styles.swatch + ' ' + styles.bullseye + ' ' + bullseyeSelect}
+          className={`${styles.swatch} ${swatches.bullseye} ${bullseyeSelect}`}
           id="bullseye"
         />
         <div
-          className={styles.swatch + ' ' + styles.autumn + ' ' + autumnSelect}
+          className={`${styles.swatch} ${swatches.autumn} ${autumnSelect}`}
           id="autumn"
         />
         <div
-          className={styles.swatch + ' ' + styles.mellow + ' ' + mellowSelect}
+          className={`${styles.swatch} ${swatches.mellow} ${mellowSelect}`}
           id="mellow"
         />
       </div>
     )
   }
-
 }
 
 SwatchSelector.propTypes = {
