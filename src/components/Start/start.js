@@ -59,32 +59,51 @@ export default class Start extends React.Component {
 
     return (
       <div className={styles.container}>
+
         <div className={styles.butttonContainer}>
-          <div className={styles.easy + ' ' + easySelected} onClick={() => this.selectDifficulty('easy')}>
+          <div
+            className={`${styles.easy} ${easySelected}`}
+            onClick={() => this.selectDifficulty('easy')}
+          >
             Easy
           </div>
-          <div className={styles.hard + ' ' + hardSelected} onClick={() => this.selectDifficulty('hard')}>
+          <div
+            className={`${styles.hard} ${hardSelected}`}
+            onClick={() => this.selectDifficulty('hard')}
+          >
             Hard
           </div>
-          <div className={styles.triples + ' ' + triplesSelected} onClick={() => this.selectDifficulty('triples')}>
+          <div
+            className={`${styles.triples} ${triplesSelected}`}
+            onClick={() => this.selectDifficulty('triples')}
+          >
             Triples
           </div>
         </div>
+
         <div className={styles.butttonContainer}>
-          <div className={styles.timedGame + ' ' + timedSelected} onClick={() => this.selectMode('timedGame')}>
+          <div
+            className={`${styles.timedGame} ${timedSelected}`}
+            onClick={() => this.selectMode('timedGame')}
+          >
             Timed Game
             <i className="material-icons">alarm</i>
           </div>
-          <div className={styles.flipGame + ' ' + flipSelected} onClick={() => this.selectMode('flipsGame')}>
+          <div
+            className={`${styles.flipGame} ${flipSelected}`}
+            onClick={() => this.selectMode('flipsGame')}
+          >
             Fewest Flips
             <i className="material-icons">extension</i>
           </div>
         </div>
+
         <div className={styles.butttonContainer}>
           <div className={styles.begin} onClick={this.startGame}>
             Begin
           </div>
         </div>
+
       </div>
     )
   }
