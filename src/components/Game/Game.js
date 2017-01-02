@@ -203,7 +203,7 @@ export default class Game extends React.Component {
 
   changeSwatch(e) {
     const swatch = e.target.id
-    if (swatch !== 0) {
+    if (swatch !== '0') {
       this.setState({ swatch })
     }
   }
