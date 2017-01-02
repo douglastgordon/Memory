@@ -1,5 +1,5 @@
 import React from 'react'
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'
 import Game from '../Game/game_container'
 
 const App = ({ store }) => (
@@ -7,5 +7,9 @@ const App = ({ store }) => (
     <Game />
   </Provider>
 )
+
+App.propTypes = {
+  store: React.PropTypes.arr,
+}
 
 export default App
