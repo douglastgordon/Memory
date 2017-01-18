@@ -1,15 +1,28 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import Game from '../Game/game_container'
+import Game from '../Game/game'
+import { getCards, getTriples } from '../../util/game_api_util'
 
-const App = ({ store }) => (
-  <Provider store={store}>
-    <Game />
-  </Provider>
-)
+class App extends React.Component {
 
-App.propTypes = {
-  store: React.PropTypes.arr,
+  constructor() {
+    super()
+    this.state = {
+      cards: {},
+      triples: {},
+    }
+  }
+
+  componentDidMount() {
+    getCards((cards) => {
+      getTriples((triples) => {
+        this.setState({ cards, triples })
+      })
+    })
+  }
+
+  render() {
+    return (<Game cards={this.state.cards} triples={this.state.triples} />)
+  }
+
 }
-
 export default App

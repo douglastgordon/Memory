@@ -42,23 +42,37 @@ export default class Game extends React.Component {
     }
   }
 
-  componentWillMount() {
-    this.props.requestCards()
-    this.props.requestTriples()
-  }
-
   componentWillReceiveProps(nextProps) {
-    this.setCardsState(nextProps.cards)
+    this.setInitialCardState(nextProps)
   }
 
-  setCardsState(data) {
+  setInitialCardState(data) {
+    const easyIcons = data.cards.levels[0].cards
+    this.processCards(easyIcons)
+  }
+
+  setCardsState() {
+    const difficulty = this.state.difficulty
+    let cards = []
+    switch (difficulty) {
+      case 'easy':
+        cards = this.props.cards.levels[0].cards
+        break
+      case 'hard':
+        cards = this.props.cards.levels[1].cards
+        break
+      case 'triples':
+        cards = this.props.triples.cards
+        break
+      default:
+        cards = []
+    }
+    this.processCards(cards)
+  }
+
+  processCards(icons) {
+    icons = shuffleArray(icons)
     const cards = []
-    let icons = []
-    data.forEach((level) => {
-      if (level.difficulty === this.state.difficulty) {
-        icons = shuffleArray(level.cards)
-      }
-    })
     icons.forEach((icon) => {
       const card = { icon, flipped: false, matched: false }
       cards.push(card)
@@ -189,7 +203,7 @@ export default class Game extends React.Component {
   // methods for Start component
   changeDifficulty(difficulty) {
     this.setState({ difficulty }, () => {
-      this.setCardsState(this.props.cards)
+      this.setCardsState()
     })
   }
 
@@ -313,7 +327,6 @@ export default class Game extends React.Component {
 }
 
 Game.propTypes = {
-  cards: React.PropTypes.arrayOf(React.PropTypes.object),
-  requestCards: React.PropTypes.func.isRequired,
-  requestTriples: React.PropTypes.func.isRequired,
+  cards: React.PropTypes.object,
+  triples: React.PropTypes.object,
 }
