@@ -67,73 +67,97 @@ export default class Game extends React.Component {
   }
 
   processMove(id) {
-    const newCardsState = this.state.cards
-
-    // stop player from clicking too quickly or on flipped card
-    if (this.state.locked || newCardsState[id].flipped === true) return
-
-    // flips selected card
-    newCardsState[id].flipped = true
-    this.setState({ flips: this.state.flips + 1 })
-
+    if (this.isLocked() || this.isCardFlipped(id)) { return }
+    const cards = this.state.cards
     const lastMoveIds = this.state.lastMoveIds
-    if (lastMoveIds.length === 0) { // first flip of set is always flipped
-      this.setState({ cards: newCardsState, lastMoveIds: [id], locked: true },
-      () => {
-        this.setState({ locked: false })
-      })
-    } else { // subsequent flips must be checked for matches
-      this.setState({ cards: newCardsState, locked: true })
-      this.checkMatch(id)
-    }
-    // check if won
-    if (this.gameWon()) {
-      this.setState({ timedRunning: false, flipsRunning: false, locked: true, won: true })
-    }
-  }
 
-  checkMatch(id) {
-    const newCardsState = this.state.cards
-    let newLastMoveIdsState = this.state.lastMoveIds
-    newLastMoveIdsState.push(id)
-    const match = this.lastCardMatches(id)
-
-    if (match) {
-      newCardsState[id].flipped = true
-      if ((this.state.difficulty === 'easy' && newLastMoveIdsState.length === 2) ||
-          (this.state.difficulty === 'hard' && newLastMoveIdsState.length === 2) ||
-          (this.state.difficulty === 'triples' && newLastMoveIdsState.length === 3)) {
-        newLastMoveIdsState.forEach((lastMoveId) => {
-          newCardsState[lastMoveId].matched = true
-        })
-        newLastMoveIdsState = []
+    lastMoveIds.push(id)
+    cards[id].flipped = true
+    this.increaseFlipScore()
+    this.setState({ cards, lastMoveIds }, () => {
+      if (this.lastFlipOfTurn()) {
+        if (this.isMatch()) {
+          this.nextTurn()
+        } else {
+          this.flipUnmatchedCards()
+        }
       }
-      this.setState({ cards: newCardsState, lastMoveIds: newLastMoveIdsState, locked: false })
-    } else {
-      this.turnOverUnmatchedTiles(newLastMoveIdsState, newCardsState)
+    })
+  }
+
+  isLocked() {
+    return this.state.locked
+  }
+
+  isCardFlipped(id) {
+    return this.state.cards[id].flipped
+  }
+
+
+  increaseFlipScore() {
+    this.setState({ flips: this.state.flips + 1 })
+  }
+
+  lastFlipOfTurn() {
+    const lastMoveIds = this.state.lastMoveIds
+    const easySetLength = 2
+    const hardSetLength = 2
+    const triplesSetLength = 3
+    switch (this.state.difficulty) {
+      case 'easy':
+        return lastMoveIds.length === easySetLength
+      case 'hard':
+        return lastMoveIds.length === hardSetLength
+      case 'triples':
+        return lastMoveIds.length === triplesSetLength
+      default:
+        return false
     }
   }
 
-  turnOverUnmatchedTiles(newLastMoveIdsState, newCardsState) {
+  flipUnmatchedCards() {
+    const lastMoveIds = this.state.lastMoveIds
+    const cards = this.state.cards
     setTimeout(() => {
-      newLastMoveIdsState.forEach((lastMoveId) => {
-        newCardsState[lastMoveId].flipped = false
+      lastMoveIds.forEach((id) => {
+        cards[id].flipped = false
       })
       this.setState({
-        cards: newCardsState,
+        cards,
         lastMoveIds: [],
-        locked: false })
+        locked: false,
+      })
     }, 500)
   }
 
-  lastCardMatches(id) {
+  isMatch() {
+    const cards = this.state.cards
+    const lastMoveIds = this.state.lastMoveIds
+    const firstCardIcon = cards[lastMoveIds[0]].icon
+
     let match = true
-    this.state.lastMoveIds.forEach((moveId) => {
-      if (this.state.cards[moveId].icon !== this.state.cards[id].icon) {
-        match = false
-      }
+    lastMoveIds.forEach((id) => {
+      if (cards[id].icon !== firstCardIcon) { match = false }
     })
     return match
+  }
+
+  nextTurn() {
+    const cards = this.state.cards
+    const lastMoveIds = this.state.lastMoveIds
+    lastMoveIds.forEach((id) => {
+      cards[id].matched = true
+    })
+    this.setState({ cards, lastMoveIds: [] }, () => {
+      if (this.gameWon()) {
+        this.setState({
+          timedRunning: false,
+          flipsRunning: false,
+          locked: true,
+          won: true,
+        })
+      }
+    })
   }
 
   gameWon() {
@@ -162,7 +186,6 @@ export default class Game extends React.Component {
     return []
   }
 
-
   // methods for Start component
   changeDifficulty(difficulty) {
     this.setState({ difficulty }, () => {
@@ -181,7 +204,6 @@ export default class Game extends React.Component {
   updateTimer() {
     this.setState({ elapsedTime: this.state.elapsedTime + 1 })
   }
-
 
   // Methods for Winner component
   quit() {

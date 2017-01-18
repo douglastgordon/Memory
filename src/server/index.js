@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
     <html>
       <head>
         <meta charset="utf-8" />
+        <link href="../assets/favicon.ico" rel="icon" type="image/x-icon" />
         <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|Space+Mono" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <title>Memory</title>
