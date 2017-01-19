@@ -26,4 +26,7 @@ app.get('/', (req, res) => {
   `)
 })
 
-app.listen(parseInt(KYT.SERVER_PORT, 10))
+
+let url = process.env.DATABASE_URI || parseInt(KYT.SERVER_PORT, 10)
+app.listen(url)
+// app.listen(parseInt(KYT.SERVER_PORT, 10))
