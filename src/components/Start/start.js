@@ -56,7 +56,6 @@ export default class Start extends React.Component {
     } else {
       flipSelected = styles.selected
     }
-
     return (
       <div className={styles.container}>
 
@@ -113,4 +112,10 @@ Start.propTypes = {
   startTimedGame: React.PropTypes.func,
   startFlipsGame: React.PropTypes.func,
   changeDifficulty: React.PropTypes.func,
+  runAI: React.PropTypes.func,
 }
+
+
+// <div onClick={this.props.runAI}>
+//   Run AI
+// </div>

@@ -24,6 +24,7 @@ export default class Game extends React.Component {
     this.changeDifficulty = this.changeDifficulty.bind(this)
     this.startTimedGame = this.startTimedGame.bind(this)
     this.startFlipsGame = this.startFlipsGame.bind(this)
+    this.runAI = this.runAI.bind(this)
     this.updateTimer = this.updateTimer.bind(this)
     this.quit = this.quit.bind(this)
     this.playAgain = this.playAgain.bind(this)
@@ -33,6 +34,7 @@ export default class Game extends React.Component {
       cards: [],
       timedRunning: false,
       flipsRunning: false,
+      AIRunning: false,
       lastMoveIds: [],
       locked: true,
       elapsedTime: 0,
@@ -106,7 +108,6 @@ export default class Game extends React.Component {
   isCardFlipped(id) {
     return this.state.cards[id].flipped
   }
-
 
   increaseFlipScore() {
     this.setState({ flips: this.state.flips + 1 })
@@ -257,6 +258,67 @@ export default class Game extends React.Component {
     }
   }
 
+  // runAI() {
+  //   this.setState({ AIRunning: true, locked: false }, () => {
+  //       this.solve()
+  //   })
+  // }
+  //
+  // solve() {
+  //   const knownCards = {}
+  //   if (this.isSet(knownCards)) {
+  //
+  //   } else {
+  //
+  //   }
+  // }
+  // learnCards() {
+  //   const numberOfCards = this.state.cards.length
+  //   const knownCards = []
+  //   let waitTime = 500
+  //   for (let i = 0; i < numberOfCards; i += 1) {
+  //     setTimeout(() => {
+  //       this.processMove(`${i}`)
+  //     }, waitTime)
+  //     const card = this.state.cards[i]
+  //     knownCards.push(card)
+  //     waitTime += 1000
+  //   }
+  //   setTimeout(() => { this.solve(knownCards) }, waitTime)
+  // }
+  //
+  // solve(cards){
+  //   let waitTime = 1000
+  //   for (let i = 0; i < cards.length - 1; i += 1) {
+  //     for (let j = i+1; j < cards.length; j += 1) {
+  //       // debugger
+  //       if (!cards[i].matched && !cards[j].matched && cards[i].icon === cards[j].icon) {
+  //         cards[i].matched = true
+  //         cards[i].flipped = true
+  //         this.update(cards, waitTime)
+  //
+  //         waitTime += 1000
+  //
+  //         cards[j].matched = true
+  //         cards[j].flipped = true
+  //         this.update(cards, waitTime)
+  //         waitTime += 1000
+  //
+  //       }
+  //     }
+  //   }
+  // }
+  //
+  // update(cards, waitTime) {
+  //   setTimeout(() => {
+  //     this.setState(cards, () => {
+  //       this.forceUpdate()
+  //     })
+  //   }, waitTime)
+  // }
+
+
+
   render() {
     const cards = this.makeCards()
 
@@ -280,11 +342,12 @@ export default class Game extends React.Component {
 
     // game setup display
     let start
-    if (!this.state.timedRunning && !this.state.flipsRunning && !this.state.won) {
+    if (!this.state.timedRunning && !this.state.flipsRunning && !this.state.AIRunning && !this.state.won ) {
       start =
       (<Start
         startTimedGame={this.startTimedGame}
         startFlipsGame={this.startFlipsGame}
+        runAI={this.runAI}
         changeDifficulty={this.changeDifficulty}
       />)
     }
