@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './start.scss'
+// import styles from './start.scss'
 
 export default class Start extends React.Component {
 
@@ -42,54 +42,54 @@ export default class Start extends React.Component {
     let hardSelected = ''
     let triplesSelected = ''
     if (this.state.difficulty === 'easy') {
-      easySelected = styles.selected
+      easySelected = "selected"
     } else if (this.state.difficulty === 'hard') {
-      hardSelected = styles.selected
+      hardSelected = "selected"
     } else {
-      triplesSelected = styles.selected
+      triplesSelected = "selected"
     }
 
     let timedSelected = ''
     let flipSelected = ''
     if (this.state.mode === 'timedGame') {
-      timedSelected = styles.selected
+      timedSelected = "selected"
     } else {
-      flipSelected = styles.selected
+      flipSelected = "selected"
     }
     return (
-      <div className={styles.container}>
+      <div className="container">
 
-        <div className={styles.butttonContainer}>
+        <div className="stButttonContainer">
           <div
-            className={`${styles.easy} ${easySelected}`}
+            className={`easy ${easySelected}`}
             onClick={() => this.selectDifficulty('easy')}
           >
             Easy
           </div>
           <div
-            className={`${styles.hard} ${hardSelected}`}
+            className={`hard ${hardSelected}`}
             onClick={() => this.selectDifficulty('hard')}
           >
             Hard
           </div>
           <div
-            className={`${styles.triples} ${triplesSelected}`}
+            className={`triples ${triplesSelected}`}
             onClick={() => this.selectDifficulty('triples')}
           >
             Triples
           </div>
         </div>
 
-        <div className={styles.butttonContainer}>
+        <div className="stButttonContainer">
           <div
-            className={`${styles.timedGame} ${timedSelected}`}
+            className={`timedGame ${timedSelected}`}
             onClick={() => this.selectMode('timedGame')}
           >
             Timed Game
             <i className="material-icons">alarm</i>
           </div>
           <div
-            className={`${styles.flipGame} ${flipSelected}`}
+            className={`flipGame ${flipSelected}`}
             onClick={() => this.selectMode('flipsGame')}
           >
             Fewest Flips
@@ -97,8 +97,8 @@ export default class Start extends React.Component {
           </div>
         </div>
 
-        <div className={styles.butttonContainer}>
-          <div className={styles.begin} onClick={this.startGame}>
+        <div className="stButttonContainer">
+          <div className="begin" onClick={this.startGame}>
             Begin
           </div>
         </div>
@@ -115,7 +115,7 @@ Start.propTypes = {
   runAI: React.PropTypes.func,
 }
 
-
-// <div onClick={this.props.runAI}>
-//   Run AI
-// </div>
+//
+//  <div onClick={this.props.runAI}>
+// //   Run AI
+// // </div>

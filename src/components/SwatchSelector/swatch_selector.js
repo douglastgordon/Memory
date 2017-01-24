@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from './swatch_selector.scss'
-import swatches from '../../assets/swatches.scss'
+// import styles from './swatch_selector.scss'
+// import swatches from '../../assets/swatches.scss'
 
 export default class SwatchSelector extends React.Component {
 
@@ -10,52 +10,52 @@ export default class SwatchSelector extends React.Component {
     let bullseyeSelect
     let autumnSelect
     let mellowSelect
-
+    //
     switch (this.props.swatch) {
       case 'barber':
-        barberSelect = styles.swatchSelect
+        barberSelect = "swatchSelect"
         break
       case 'blackAndWhite':
-        blackAndWhiteSelect = styles.swatchSelect
+        blackAndWhiteSelect = "swatchSelect"
         break
       case 'bullseye':
-        bullseyeSelect = styles.swatchSelect
+        bullseyeSelect = "swatchSelect"
         break
       case 'autumn':
-        autumnSelect = styles.swatchSelect
+        autumnSelect = "swatchSelect"
         break
       case 'mellow':
-        mellowSelect = styles.swatchSelect
+        mellowSelect = "swatchSelect"
         break
       default:
-        barberSelect = styles.swatchSelect
+        barberSelect = "swatchSelect"
         break
     }
 
     return (
       <div
         id="0"
-        className={styles.butttonContainer}
+        className="swaButtonContainer"
         onClick={(e) => { this.props.changeSwatch(e) }}
       >
         <div
-          className={`${styles.swatch} ${swatches.barber} ${barberSelect}`}
+          className={`swatch barber ${barberSelect}`}
           id="barber"
         />
         <div
-          className={`${styles.swatch} ${swatches.blackAndWhite} ${blackAndWhiteSelect}`}
+          className={`swatch blackAndWhite ${blackAndWhiteSelect}`}
           id="blackAndWhite"
         />
         <div
-          className={`${styles.swatch} ${swatches.bullseye} ${bullseyeSelect}`}
+          className={`swatch bullseye ${bullseyeSelect}`}
           id="bullseye"
         />
         <div
-          className={`${styles.swatch} ${swatches.autumn} ${autumnSelect}`}
+          className={`swatch autumn ${autumnSelect}`}
           id="autumn"
         />
         <div
-          className={`${styles.swatch} ${swatches.mellow} ${mellowSelect}`}
+          className={`swatch mellow ${mellowSelect}`}
           id="mellow"
         />
       </div>

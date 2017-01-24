@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './winner.scss'
+// import styles from './winner.scss'
 
 export default class Winner extends React.Component {
 
@@ -23,14 +23,14 @@ export default class Winner extends React.Component {
     }
 
     return (
-      <div className={styles.winContainer}>
+      <div className="winContainer">
         <h2>Success!</h2>
         {message}
-        <div className={styles.butttonContainer}>
-          <div className={styles.settings} onClick={this.props.settings}>
+        <div className="winButtonContainer">
+          <div className="settings" onClick={this.props.settings}>
             Settings
           </div>
-          <div className={styles.playAgain} onClick={() => { this.props.playAgain(mode) }}>
+          <div className="playAgain" onClick={() => { this.props.playAgain(mode) }}>
             Play Again
           </div>
         </div>

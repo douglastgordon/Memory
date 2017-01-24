@@ -4,7 +4,7 @@ import Card from '../Card/card'
 import Winner from '../Winner/winner'
 import Start from '../Start/start'
 import SwatchSelector from '../SwatchSelector/swatch_selector'
-import styles from './Game.scss'
+// import styles from './Game.scss'
 
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i -= 1) {
@@ -24,7 +24,7 @@ export default class Game extends React.Component {
     this.changeDifficulty = this.changeDifficulty.bind(this)
     this.startTimedGame = this.startTimedGame.bind(this)
     this.startFlipsGame = this.startFlipsGame.bind(this)
-    this.runAI = this.runAI.bind(this)
+    // this.runAI = this.runAI.bind(this)
     this.updateTimer = this.updateTimer.bind(this)
     this.quit = this.quit.bind(this)
     this.playAgain = this.playAgain.bind(this)
@@ -326,7 +326,7 @@ export default class Game extends React.Component {
     let quit
     if (this.state.timedRunning || this.state.flipsRunning) {
       quit = (
-        <p className={styles.quit} onClick={this.quit}>
+        <p className="quit" onClick={this.quit}>
           Quit
         </p>
       )
@@ -335,9 +335,9 @@ export default class Game extends React.Component {
     // score indicator (either time or flips)
     let score
     if (this.state.timedRunning) {
-      score = <Timer className={styles.score} updateTimer={this.updateTimer} />
+      score = <Timer className="score" updateTimer={this.updateTimer} />
     } else if (this.state.flipsRunning) {
-      score = <p className={styles.score}>{this.state.flips}</p>
+      score = <p className="score">{this.state.flips}</p>
     }
 
     // game setup display
@@ -366,16 +366,16 @@ export default class Game extends React.Component {
       )
     }
 
-    const extended = this.state.difficulty === 'triples' ? styles.wide : ''
+    const extended = this.state.difficulty === 'triples' ? "wide" : ''
 
     return (
-      <div className={styles.body}>
-        <h1 className={styles.header}>Memory</h1>
+      <div className="body">
+        <h1 className="header">Memory</h1>
         {score}
-        <div className={styles.content}>
+        <div className="content">
           {start}
           {winner}
-          <div className={`${styles.gamearea} ${extended}`}>
+          <div className={`gamearea ${extended}`}>
             {cards}
           </div>
         </div>

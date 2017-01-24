@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from './card.scss'
-import swatches from '../../assets/swatches.scss'
+// import styles from './card.scss'
+// import swatches from '../../assets/swatches.scss'
 
 export default class Card extends React.Component {
 
@@ -14,40 +14,40 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const clicked = this.props.flipped ? styles.clicked : ''
+    const clicked = this.props.flipped ? "clicked" : ''
 
-    let swatch
-    switch (this.props.swatch) {
-      case 'barber':
-        swatch = swatches.barber
-        break
-      case 'blackAndWhite':
-        swatch = swatches.blackAndWhite
-        break
-      case 'bullseye':
-        swatch = swatches.bullseye
-        break
-      case 'autumn':
-        swatch = swatches.autumn
-        break
-      case 'mellow':
-        swatch = swatches.mellow
-        break
-      default:
-        break
-    }
+    // let swatch
+    // switch (this.props.swatch) {
+    //   case 'barber':
+    //     swatch = "barber"
+    //     break
+    //   case 'blackAndWhite':
+    //     swatch = "blackAndWhite"
+    //     break
+    //   case 'bullseye':
+    //     swatch = "bullseye"
+    //     break
+    //   case 'autumn':
+    //     swatch = "autumn"
+    //     break
+    //   case 'mellow':
+    //     swatch = "mellow"
+    //     break
+    //   default:
+    //     break
+    // }
 
     return (
       <div
-        className={`${styles.cardContainer} ${clicked}`}
+        className={`cardContainer ${clicked}`}
         id={this.props.id}
         onClick={this.flip}
       >
-        <div className={styles.flipper}>
-          <div className={styles.front}>
-            <div className={`${styles.design} ${swatch}`} />
+        <div className="flipper">
+          <div className="front">
+            <div className={`design ${this.props.swatch}`} />
           </div>
-          <div className={styles.back}>
+          <div className="back">
             <p>{this.props.icon}</p>
           </div>
         </div>

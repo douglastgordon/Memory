@@ -1,5 +1,5 @@
 import React from 'react'
-import Game from '../Game/game'
+import Game from '../Game/game.js'
 import { getCards, getTriples } from '../../util/game_api_util'
 
 class App extends React.Component {

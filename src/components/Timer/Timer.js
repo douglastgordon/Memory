@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from './Timer.scss'
+// import styles from './Timer.scss'
 
 export const formatTime = (time) => {
   if (time < 0) return '--:--'
@@ -14,7 +14,7 @@ export const formatTime = (time) => {
 }
 
 const Timer = ({ time = 0 }) => (
-  <div className={styles.timer}>
+  <div className="timer">
     <p>{formatTime(time)}</p>
   </div>
 )
